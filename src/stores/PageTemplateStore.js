@@ -1,8 +1,7 @@
 import { observable, computed, action } from "mobx";
 
-import TodoModel from "./TodoModel";
 
-export default class TodoListModel {
+export default class PageTemplateStore {
   @observable todos = [];
 
   @computed
@@ -12,6 +11,11 @@ export default class TodoListModel {
 
   @action
   addTodo(title) {
-    this.todos.push(new TodoModel(title));
+    // this.todos.push(new TodoStore(title));
+    this.todos.push({
+      id: Math.random(),
+      title,
+      finished: false
+    });
   }
 }

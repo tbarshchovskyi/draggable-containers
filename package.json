@@ -1,14 +1,14 @@
 {
-  "name": "mobx-react-boilerplate",
+  "name": "draggable-containers",
   "version": "1.0.0",
-  "description": "Boilerplate for MobX + React project with JSX, ES6 and decorator compilation",
+  "description": "Draggable Containers App for web pages templates",
   "scripts": {
     "start": "webpack-dev-server --hot --open",
     "lint": "eslint src"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/mobxjs/mobx-react-boilerplate.git"
+    "url": "https://github.com/tbarshchovskyi/draggable-containers.git"
   },
   "keywords": [
     "react",
@@ -17,12 +17,9 @@
     "mobx",
     "starter-kit"
   ],
-  "author": "Michel Weststrate <mweststrate@gmail.com> (http://github.com/mweststrate)",
+  "author": "Taras Barshchovskyi <borshch.vip@gmail.com> (https://github.com/tbarshchovskyi)",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/mobxjs/mobx/issues"
-  },
-  "homepage": "http://mobxjs.github.com/mobx",
+  "homepage": "https://github.com/tbarshchovskyi/draggable-containers",
   "devDependencies": {
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
@@ -30,15 +27,21 @@
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-1": "^6.24.1",
-    "webpack": "^4.16.1",
+    "css-loader": "^1.0.1",
+    "node-sass": "^4.10.0",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.25.1",
     "webpack-cli": "^3.0.8",
     "webpack-dev-server": "^3.1.4"
   },
   "dependencies": {
+    "classnames": "^2.2.6",
     "mobx": "^5.0.3",
     "mobx-react": "^5.2.3",
     "mobx-react-devtools": "^6.0.1",
     "react": "^16.4.1",
-    "react-dom": "^16.4.1"
+    "react-dom": "^16.4.1",
+    "react-grid-layout": "^0.16.6"
   }
 }

@@ -1,15 +1,12 @@
-mobx-react-boilerplate
-=====================
+Draggable Containers App
+========================
 
-A minimal application that combines [MobX](https://mobxjs.github.io/mobx) with [React](https://facebook.github.io/react).
-Supports ES6 and JSX compilation through babel.
+This is Draggable Containers App for making web pages templates. You can drag, resize or lock any of draggable panels to have very flexible page template structure.
 
-* Support for React-Hot-Loader can be found in the [`with-hot-loader`](https://github.com/mobxjs/mobx-react-boilerplate/tree/with-hot-loader) branch
-* For a typescript based boilerplate, see [`mobx-react-typescript-boilerplate`](https://github.com/mobxjs/mobx-react-typescript-boilerplate)
-* To use MobX with create-react-app and decorators, [react-app-rewired](https://github.com/timarney/react-app-rewired/tree/master/packages/react-app-rewire-mobx) or this example using [custom-react-scripts](https://github.com/codylindley/mobx-react)
+App is responsive, so it will look nice at any screen.
 
 
-### Run the example
+### Run App
 
 ```
 npm install
@@ -17,7 +14,3 @@ npm start
 ```
 
 Browser should open automatically. Otherwise, navigate to the URL reported in the terminal
-
-### Credits
-
-* [Mendix](http://github.com/mendix) for providing the opportunity to battle test this approach (we're hiring!).

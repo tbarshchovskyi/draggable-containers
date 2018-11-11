@@ -1,6 +1,6 @@
 import { observable } from "mobx";
 
-export default class TodoModel {
+export default class TodoStore {
   id = Math.random();
   @observable title;
   @observable finished = false;

@@ -1,0 +1,126 @@
+.panel.react-grid-item {
+  box-sizing: border-box;
+  transition: all 200ms ease;
+  transition-property: left, top;
+  box-shadow: 1px 1px 10px $gray-80;
+
+  &:not(.react-grid-placeholder) {
+    background: $white;
+    cursor: grab;
+  }
+
+  &:hover {
+    .plus-btn {
+      display: inline-block;
+    }
+  }
+
+  &.resizing {
+    opacity: 0.9;
+    z-index: 1;
+    will-change: width, height;
+  }
+
+  &.react-draggable-dragging {
+    transition: none;
+    z-index: 3;
+    will-change: transform;
+  }
+
+  &.static {
+    background: #cce;
+  }
+
+  &.cssTransforms {
+    transition-property: transform;
+  }
+
+  & > .react-resizable-handle {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    bottom: 0;
+    right: 0;
+    background: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/Pg08IS0tIEdlbmVyYXRvcjogQWRvYmUgRmlyZXdvcmtzIENTNiwgRXhwb3J0IFNWRyBFeHRlbnNpb24gYnkgQWFyb24gQmVhbGwgKGh0dHA6Ly9maXJld29ya3MuYWJlYWxsLmNvbSkgLiBWZXJzaW9uOiAwLjYuMSAgLS0+DTwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DTxzdmcgaWQ9IlVudGl0bGVkLVBhZ2UlMjAxIiB2aWV3Qm94PSIwIDAgNiA2IiBzdHlsZT0iYmFja2dyb3VuZC1jb2xvcjojZmZmZmZmMDAiIHZlcnNpb249IjEuMSINCXhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbDpzcGFjZT0icHJlc2VydmUiDQl4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjZweCIgaGVpZ2h0PSI2cHgiDT4NCTxnIG9wYWNpdHk9IjAuMzAyIj4NCQk8cGF0aCBkPSJNIDYgNiBMIDAgNiBMIDAgNC4yIEwgNCA0LjIgTCA0LjIgNC4yIEwgNC4yIDAgTCA2IDAgTCA2IDYgTCA2IDYgWiIgZmlsbD0iIzAwMDAwMCIvPg0JPC9nPg08L3N2Zz4=");
+    background-position: bottom right;
+    padding: 0 3px 3px 0;
+    background-repeat: no-repeat;
+    background-origin: content-box;
+    box-sizing: border-box;
+    cursor: se-resize;
+  }
+
+  .panel-header {
+    text-align: right;
+    font-size: 16px;
+
+    .glyphicon-lock {
+      float: left;
+    }
+
+    .glyphicon {
+      margin: 5px;
+      color: $gray-40;
+
+      &:hover:not(.glyphicon-move) {
+        color: $gray-80;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .text-area {
+    margin: 20px;
+    text-align: center;
+    color: $gray-40;
+    border: 1px dashed $gray-40;
+    border-radius: 3px;
+  }
+
+  .plus-btn {
+    display: none;
+    position: absolute;
+    width: 45px;
+    height: 45px;
+    padding: 13px 16px;
+    border-radius: 25px;
+    background-color: $orange-40;
+    cursor: pointer;
+    z-index: 10;
+
+    &.right {
+      right: -23px;
+      top: 50%;
+    }
+
+    &.bottom {
+      bottom: -23px;
+      left: 50%;
+    }
+
+    .glyphicon {
+      color: $white;
+    }
+  }
+
+  .react-grid-dragHandleExample {
+    cursor: move; /* fallback if grab cursor is unsupported */
+    cursor: grab;
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
+  }
+}
+
+.react-grid-item.react-grid-placeholder {
+  background: $gray-40;
+  border: 2px dashed $gray-80;
+  border-radius: 10px;
+  opacity: 0.2;
+  transition-duration: 100ms;
+  z-index: 2;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}

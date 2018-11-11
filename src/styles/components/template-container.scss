@@ -1,0 +1,9 @@
+.root-container {
+  padding: 0 20px;
+
+  .react-grid-layout {
+    background-color: $gray-20;
+    position: relative;
+    transition: height 200ms ease;
+  }
+}
