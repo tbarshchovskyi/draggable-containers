@@ -40,7 +40,6 @@ class PageTemplate extends React.Component {
   }
 
   onLayoutChange = (layout, layouts) => {
-    console.log('onLayoutChange')
     this.layouts = layouts
   }
 
