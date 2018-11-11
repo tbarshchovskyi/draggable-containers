@@ -12,22 +12,28 @@ class Panel extends React.Component {
     this.editMode = true
   }
 
-  onSave = (e) => {
-    console.log('ev',e)
+  saveText = (e) => {
     this.editMode = false
-    this.panelText = 'My Text Test'
+    this.panelText = e.target.value
   }
 
   render() {
     const { onAddPanel, onRemovePanel, onLockPanel } = this.props
+
     const editSection = this.editMode ? (
-      <textarea defaultValue='Type something here...' />
+      <textarea autoFocus defaultValue='Type something here...' onBlur={this.saveText} />
     ) : (
       <div className="text-area" onClick={this.onEdit}>
         <div className="edit-label">
           <i className="glyphicon glyphicon-pencil"></i>
           <span>Click here to edit</span>
         </div>
+      </div>
+    )
+
+    const panelTextSection = (
+      <div className="text-area text" onClick={this.onEdit}>
+        {this.panelText}
       </div>
     )
 
@@ -44,7 +50,7 @@ class Panel extends React.Component {
           <i className="glyphicon glyphicon-plus"></i>
         </span>
 
-        {editSection}
+        {this.panelText ? panelTextSection : editSection}
 
         <span className="plus-btn bottom" onClick={onAddPanel}>
           <i className="glyphicon glyphicon-plus"></i>
