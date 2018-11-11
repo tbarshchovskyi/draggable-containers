@@ -28,7 +28,10 @@
   }
 
   &.static {
-    background: #cce;
+    .glyphicon.glyphicon-lock {
+      color: $gray-80;
+      font-size: 23px;
+    }
   }
 
   &.cssTransforms {
@@ -59,7 +62,7 @@
     }
 
     .glyphicon {
-      margin: 5px;
+      padding: 5px;
       color: $gray-40;
 
       &:hover:not(.glyphicon-move) {
@@ -70,11 +73,25 @@
   }
 
   .text-area {
+    height: 60%;
     margin: 20px;
     text-align: center;
     color: $gray-40;
     border: 1px dashed $gray-40;
     border-radius: 3px;
+    cursor: pointer;
+
+    .edit-label {
+      margin-top: 30px;
+
+      &:hover {
+       color: $gray-80;
+      }
+
+      .glyphicon {
+        margin: 0 5px;
+      }
+    }
   }
 
   .plus-btn {

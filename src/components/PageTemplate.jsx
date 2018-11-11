@@ -13,20 +13,25 @@ const ResponsiveGridLayout = WidthProvider(Responsive);
 class PageTemplate extends React.Component {
   @observable layouts = {
     lg: [
-      {i: '0', x: 2, y: 0, w: 5, h: 2}
+      {i: '0', x: 0, y: 0, w: 7, h: 1},
+      {i: '1', x: 3, y: 0, w: 1, h: 1},
+      {i: '2', x: 3, y: 0, w: 1, h: 2},
+      {i: '3', x: 4, y: 2, w: 2, h: 1}
     ]
   }
 
   getPanels = () => {
-    const panels = this.layouts.lg.map((layout, i) => {
-      const layoutObj = toJS(layout)
+    const panels = this.layouts.lg.map((layout, j, arr) => {
+      const arrLength = arr.length
+
       return (
         <div
-          key={i}
+          key={layout.i}
           className={classNames('panel', { static: layout && layout.static })}>
           <Panel
-            onAddPanel={this.onAddPanel}
-            onRemovePanel={(e) => this.onRemovePanel(i, e)} />
+            onAddPanel={(e) => this.onAddPanel(arrLength, e)}
+            onRemovePanel={(e) => this.onRemovePanel(layout.i, e)}
+            onLockPanel={(e) => this.onLockPanel(layout.i, e)} />
         </div>
       )
     })
@@ -35,28 +40,43 @@ class PageTemplate extends React.Component {
   }
 
   onLayoutChange = (layout, layouts) => {
+    console.log('onLayoutChange')
     this.layouts = layouts
   }
 
-  onAddPanel = () =>  {
+  onAddPanel = (arrLength) =>  {
+    const lastItemId = arrLength++
+
     this.layouts.lg.push({
-      i: "3",
-      x: (this.layouts.lg.length) % 5,
+      i: lastItemId.toString(),
+      x: (this.layouts.lg.length) % 7,
       y: Infinity, // puts it at the bottom
       w: 2,
       h: 2
     })
-}
+    console.log('this.layouts.lg',toJS(this.layouts.lg))
+  }
 
-onRemovePanel = (i) =>  {
-  console.log('Layouts',i, toJS(this.layouts.lg))
+  onRemovePanel = (index) =>  {
+    const filteredLayouts = toJS(this.layouts.lg).filter(item => {
+      return item.i != index
+    })
 
-  const filtersLayouts = toJS(this.layouts.lg).filter(item => {
-    return item.i != i
-  })
-  console.log('filtersLayouts',i, filtersLayouts)
-  this.layouts.lg = filtersLayouts
-}
+    this.layouts.lg = filteredLayouts
+  }
+
+  onLockPanel = (index) => {
+    const layoutsWithLock = toJS(this.layouts.lg).map(item => {
+      if (item.i == index) {
+        item.static = item.static ? false : true
+      }
+      return item
+    })
+
+    this.layouts = {
+      lg: layoutsWithLock
+    }
+  }
 
   render() {
     return (
@@ -66,8 +86,8 @@ onRemovePanel = (i) =>  {
           className="layout"
           currentBreakpoint="lg"
           layouts={this.layouts}
-          breakpoints={{lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0}}
-          cols={{lg: 5, md: 4, sm: 3, xs: 3, xxs: 2}}
+          breakpoints={{lg: 1200, sm: 768, xs: 480}}
+          cols={{lg: 7, sm: 4, xs: 2}}
           containerPadding={[30, 30]}
           measureBeforeMount={false}
           onLayoutChange={this.onLayoutChange}>
