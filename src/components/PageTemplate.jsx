@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Fragment } from "react";
 import PropTypes from 'prop-types'
 import { observable, action, toJS } from "mobx";
 import { observer } from "mobx-react";
@@ -19,25 +19,16 @@ const ResponsiveGridLayout = WidthProvider(Responsive);
 
 @observer
 class PageTemplate extends React.Component {
-  /*** Simple object like {i: '0', x: 0, y: 0, w: 1, h: 1} is all data
-       that needed for one panel representation
-  ***/
-  @observable layouts = {
-    lg: [
-      {i: '0', x: 0, y: 0, w: 6, h: 1},
-      {i: '1', x: 3, y: 0, w: 1, h: 1},
-      {i: '2', x: 3, y: 0, w: 1, h: 2},
-      {i: '3', x: 4, y: 2, w: 2, h: 1}
-    ]
-  };
-  @observable layoutsData = {};
   @observable compactType = COMPACT_TYPE_OPTIONS[0];
 
   getPanels = () => {
-    const panels = this.layouts.lg.map((layout, j, layouts) => {
-      const panelsCount = layouts.length;
-      const layoutText = this.layoutsData[layout.i] || '';
-      const lastLayout = layouts[layouts.length-1];
+    const { layouts, layoutsData, addPanelBottom, addPanelRight,
+            removePanel, lockPanel, saveText } = this.props.store
+
+    const panels = layouts.lg.map((layout, j, layoutsArr) => {
+      const panelsCount = layoutsArr.length;
+      const layoutText = layoutsData[layout.i] || '';
+      const lastLayout = layoutsArr[layoutsArr.length-1];
       const lastLayoutIndex = lastLayout.i;
 
       return (
@@ -46,11 +37,11 @@ class PageTemplate extends React.Component {
           className={classNames('panel', { static: layout && layout.static})}>
           <Panel
             panelsCount={panelsCount}
-            onAddPanelBottom={(e) => this.onAddPanelBottom(lastLayoutIndex, layout, e)}
-            onAddPanelRight={(e) => this.onAddPanelRight(lastLayoutIndex, layout, e)}
-            onRemovePanel={(e) => this.onRemovePanel(layout.i, e)}
-            onLockPanel={(e) => this.onLockPanel(layout.i, e)}
-            onSaveText={(e) => this.onSaveText(e, layout.i)}
+            onAddPanelBottom={(e) => addPanelBottom(lastLayoutIndex, layout, e)}
+            onAddPanelRight={(e) => addPanelRight(lastLayoutIndex, layout, e)}
+            onRemovePanel={(e) => removePanel(layout.i, e)}
+            onLockPanel={(e) => lockPanel(layout.i, e)}
+            onSaveText={(e) => saveText(e, layout.i)}
             panelText={layoutText} />
         </div>
       )
@@ -60,73 +51,7 @@ class PageTemplate extends React.Component {
   }
 
   onLayoutChange = (layout, layouts) => {
-    this.layouts = layouts;
-  }
-
-  onAddPanelBottom = (lastLayoutIndex, layout) =>  {
-    // Calculate "i" index for new panel
-    const lastItemId = lastLayoutIndex + 1;
-    // Calculate Y position for new panel(x stat the same)
-    const newLayoutYPosition = layout.y + layout.h;
-
-    const newLayouts = toJS(this.layouts.lg);
-    newLayouts.push({
-      i: lastItemId.toString(),
-      x: layout.x,
-      y: newLayoutYPosition,
-      w: 1,
-      h: 1,
-    });
-
-    this.layouts = {
-      lg: newLayouts
-    }
-  }
-
-  onAddPanelRight = (lastLayoutIndex, layout) =>  {
-      // Calculate "i" index for new panel
-    const lastItemId = lastLayoutIndex + 1;
-    // Calculate Y position for new panel(x stat the same)
-    const newLayoutXPosition = layout.x + layout.w;
-
-    const newLayouts = toJS(this.layouts.lg)
-    newLayouts.push({
-      i: lastItemId.toString(),
-      x: newLayoutXPosition,
-      y: layout.y,
-      w: 1,
-      h: 1,
-    });
-
-    this.layouts = {
-      lg: newLayouts
-    }
-  }
-
-  onRemovePanel = (index) =>  {
-    const filteredLayouts = this.layouts.lg.filter(item => {
-      return item.i != index;
-    })
-
-    this.layouts.lg = filteredLayouts;
-  }
-
-  onLockPanel = (index) => {
-    const layoutsWithLock = toJS(this.layouts.lg).map(item => {
-      if (item.i == index) {
-        item.static = !item.static;
-      }
-      return item;
-    })
-
-    this.layouts = {
-      lg: layoutsWithLock
-    }
-  }
-
-  onSaveText = (e, index) => {
-    const textValue = e.target.value;
-    this.layoutsData[index] = textValue;
+    this.props.store.layouts = layouts;
   }
 
   setCompactType = () => {
@@ -137,7 +62,7 @@ class PageTemplate extends React.Component {
 
   render() {
     return (
-      <div>
+      <Fragment>
         <h2>Page template</h2>
         <div>
           <span>Compact Type:</span>
@@ -150,7 +75,7 @@ class PageTemplate extends React.Component {
         <ResponsiveGridLayout
           className="layout"
           currentBreakpoint="lg"
-          layouts={this.layouts}
+          layouts={this.props.store.layouts}
           breakpoints={{lg: 1200, sm: 768, xs: 480}}
           cols={{lg: 7, sm: 4, xs: 2}}
           margin={[18,18]}
@@ -160,7 +85,7 @@ class PageTemplate extends React.Component {
           onLayoutChange={this.onLayoutChange}>
           {this.getPanels()}
         </ResponsiveGridLayout>
-      </div>
+      </Fragment>
     );
   }
 }

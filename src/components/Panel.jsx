@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Fragment } from "react";
 import PropTypes from 'prop-types'
 import { observable, action } from "mobx";
 import { observer } from "mobx-react";
@@ -49,7 +49,7 @@ class Panel extends React.Component {
     )
 
     return (
-      <div>
+      <Fragment>
         <div className="panel-header">
           <i className="glyphicon glyphicon-lock" onClick={onLockPanel}></i>
           <i className="glyphicon glyphicon-pencil" onClick={this.onEdit}></i>
@@ -68,7 +68,7 @@ class Panel extends React.Component {
         <span className="plus-btn bottom" onClick={onAddPanelBottom}>
           <i className="glyphicon glyphicon-plus"></i>
         </span>
-      </div>
+      </Fragment>
     );
   }
 }
