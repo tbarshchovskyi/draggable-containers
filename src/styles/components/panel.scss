@@ -29,7 +29,7 @@
 
   &.static {
     .glyphicon.glyphicon-lock {
-      color: $gray-80;
+      color: $orange-40;
       font-size: 23px;
     }
   }
@@ -61,19 +61,28 @@
       float: left;
     }
 
+    .glyphicon-trash.disabled {
+      pointer-events: none;
+      opacity: 0.3;
+    }
+
     .glyphicon {
       padding: 5px;
       color: $gray-40;
 
       &:hover:not(.glyphicon-move) {
-        color: $gray-80;
+        color: $orange-40;
         cursor: pointer;
       }
     }
   }
 
   .text-area {
-    height: 60%;
+    position: absolute;
+    top: 20px;
+    right: 10px;
+    bottom: 10px;
+    left: 10px;
     margin: 20px;
     text-align: center;
     color: $gray-40;
@@ -81,15 +90,41 @@
     border-radius: 3px;
     cursor: pointer;
 
-    .edit-label {
-      margin-top: 30px;
+    &:hover {
+     color: $gray-80;
+     border-width: 2px;
+    }
 
-      &:hover {
-       color: $gray-80;
-      }
+    .edit-label {
+      position: relative;
+      top: 50%;
+      transform:  translateY(-50%);
 
       .glyphicon {
         margin: 0 5px;
+      }
+    }
+
+    .text {
+      padding: 7px 10px;
+      text-align: left;
+      color: $gray-80;
+    }
+  }
+
+  .text-area-input {
+    padding: 10px 30px;
+
+    textarea {
+      resize: none;
+      width: 100%;
+      height: 60%;
+      padding: 10px;
+
+      &:focus {
+        border: 1px solid $gray-40;
+        color: $gray-40;
+        outline: none;
       }
     }
   }
@@ -108,11 +143,13 @@
     &.right {
       right: -23px;
       top: 50%;
+      transform:  translateY(-50%);
     }
 
     &.bottom {
       bottom: -23px;
       left: 50%;
+      transform:  translateX(-50%);
     }
 
     .glyphicon {

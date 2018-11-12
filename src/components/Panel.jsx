@@ -1,39 +1,43 @@
 import React, { Component } from "react";
 import { observable, action } from "mobx";
 import { observer } from "mobx-react";
+import classNames from 'classnames';
 
 
 @observer
 class Panel extends React.Component {
-  @observable editMode = false
-  @observable panelText = ''
+  @observable editMode = false;
 
   onEdit = () => {
-    this.editMode = true
+    this.editMode = true;
   }
 
   saveText = (e) => {
+    this.props.onSaveText(e)
     this.editMode = false
-    this.panelText = e.target.value
   }
 
   render() {
-    const { onAddPanel, onRemovePanel, onLockPanel } = this.props
+    const { panelsCount, panelText, onAddPanel, onRemovePanel, onLockPanel } = this.props;
 
-    const editSection = this.editMode ? (
-      <textarea autoFocus defaultValue='Type something here...' onBlur={this.saveText} />
-    ) : (
-      <div className="text-area" onClick={this.onEdit}>
-        <div className="edit-label">
-          <i className="glyphicon glyphicon-pencil"></i>
-          <span>Click here to edit</span>
-        </div>
+    const textAreaPlaceholder = panelText ? <div className="text">{panelText}</div> : (
+      <div className="edit-label">
+        <i className="glyphicon glyphicon-pencil"></i>
+        <span>Click here to edit</span>
       </div>
     )
 
-    const panelTextSection = (
-      <div className="text-area text" onClick={this.onEdit}>
-        {this.panelText}
+    const editSection = (this.editMode) ? (
+      <div className="text-area-input">
+        <textarea
+          defaultValue={panelText}
+          placeholder="Type something here..."
+          onBlur={this.saveText}
+          autoFocus={true} />
+        </div>
+    ) : (
+      <div className="text-area" onClick={this.onEdit}>
+        {textAreaPlaceholder}
       </div>
     )
 
@@ -42,7 +46,9 @@ class Panel extends React.Component {
         <div className="panel-header">
           <i className="glyphicon glyphicon-lock" onClick={onLockPanel}></i>
           <i className="glyphicon glyphicon-pencil" onClick={this.onEdit}></i>
-          <i className="glyphicon glyphicon-trash" onClick={onRemovePanel}></i>
+          <i
+            className={classNames('glyphicon glyphicon-trash', {disabled: panelsCount <= 1})}
+            onClick={onRemovePanel}></i>
           <i className="glyphicon glyphicon-move"></i>
         </div>
 
@@ -50,7 +56,7 @@ class Panel extends React.Component {
           <i className="glyphicon glyphicon-plus"></i>
         </span>
 
-        {this.panelText ? panelTextSection : editSection}
+        {editSection}
 
         <span className="plus-btn bottom" onClick={onAddPanel}>
           <i className="glyphicon glyphicon-plus"></i>

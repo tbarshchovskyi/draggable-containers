@@ -7,6 +7,7 @@ import classNames from 'classnames';
 import Panel from "./Panel";
 
 
+const COMPACT_TYPE_OPTIONS = ['vertical', 'horizontal', '']
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
 @observer
@@ -18,58 +19,64 @@ class PageTemplate extends React.Component {
       {i: '2', x: 3, y: 0, w: 1, h: 2},
       {i: '3', x: 4, y: 2, w: 2, h: 1}
     ]
-  }
+  };
+  @observable layoutsData = {'1': 'Some interesting draggable panel!'};
+  @observable compactType = COMPACT_TYPE_OPTIONS[0];
 
   getPanels = () => {
     const panels = this.layouts.lg.map((layout, j, arr) => {
-      const arrLength = arr.length
+      const panelsCount = arr.length
+      const layoutText = this.layoutsData[layout.i] || ''
 
       return (
         <div
           key={layout.i}
-          className={classNames('panel', { static: layout && layout.static })}>
+          className={classNames('panel', { static: layout && layout.static})}>
           <Panel
-            onAddPanel={(e) => this.onAddPanel(arrLength, e)}
+            panelsCount={panelsCount}
+            onAddPanel={(e) => this.onAddPanel(panelsCount, e)}
             onRemovePanel={(e) => this.onRemovePanel(layout.i, e)}
-            onLockPanel={(e) => this.onLockPanel(layout.i, e)} />
+            onLockPanel={(e) => this.onLockPanel(layout.i, e)}
+            onSaveText={(e) => this.onSaveText(e, layout.i)}
+            panelText={layoutText} />
         </div>
       )
     })
 
-    return panels
+    return panels;
   }
 
   onLayoutChange = (layout, layouts) => {
-    this.layouts = layouts
+    this.layouts = layouts;
   }
 
   onAddPanel = (arrLength) =>  {
-    const lastItemId = arrLength++
+    const lastItemId = arrLength++;
 
     this.layouts.lg.push({
       i: lastItemId.toString(),
       x: (this.layouts.lg.length) % 7,
       y: Infinity, // puts it at the bottom
       w: 2,
-      h: 2
+      h: 2,
+      text: ''
     })
-    console.log('this.layouts.lg',toJS(this.layouts.lg))
   }
 
   onRemovePanel = (index) =>  {
-    const filteredLayouts = toJS(this.layouts.lg).filter(item => {
-      return item.i != index
+    const filteredLayouts = this.layouts.lg.filter(item => {
+      return item.i != index;
     })
 
-    this.layouts.lg = filteredLayouts
+    this.layouts.lg = filteredLayouts;
   }
 
   onLockPanel = (index) => {
     const layoutsWithLock = toJS(this.layouts.lg).map(item => {
       if (item.i == index) {
-        item.static = item.static ? false : true
+        item.static = item.static ? false : true;
       }
-      return item
+      return item;
     })
 
     this.layouts = {
@@ -77,10 +84,30 @@ class PageTemplate extends React.Component {
     }
   }
 
+  onSaveText = (e, index) => {
+    const textValue = e.target.value;
+    this.layoutsData[index] = textValue;
+  }
+
+  setCompactType = () => {
+    let currentTypeIndex = COMPACT_TYPE_OPTIONS.indexOf(this.compactType);
+    this.compactType = currentTypeIndex < (COMPACT_TYPE_OPTIONS.length-1) ?
+      COMPACT_TYPE_OPTIONS[++currentTypeIndex] : COMPACT_TYPE_OPTIONS[0];
+    console.log('this.compactType',this.compactType)
+  }
+
   render() {
     return (
       <div>
         <h2>Page template</h2>
+        <div>
+          <span>Compact Type:</span>
+          <span
+            className="compact-type-btn"
+            onClick={this.setCompactType}>
+            {this.compactType || 'none'}
+          </span>
+        </div>
         <ResponsiveGridLayout
           className="layout"
           currentBreakpoint="lg"
@@ -89,6 +116,7 @@ class PageTemplate extends React.Component {
           cols={{lg: 7, sm: 4, xs: 2}}
           containerPadding={[30, 30]}
           measureBeforeMount={false}
+          compactType={this.compactType || null}
           onLayoutChange={this.onLayoutChange}>
           {this.getPanels()}
         </ResponsiveGridLayout>

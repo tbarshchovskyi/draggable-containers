@@ -1,9 +1,27 @@
 .root-container {
   padding: 0 20px;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 
   .react-grid-layout {
-    background-color: $gray-20;
     position: relative;
+    min-height: 100vh;
+    margin: 15px 0;
     transition: height 200ms ease;
+    background-color: $gray-20;
+    border: 1px solid $gray-40;
+    border-radius: 3px;
+  }
+
+  .compact-type-btn {
+    display: inline-block;
+    width: 90px;
+    margin-left: 15px;
+    padding: 3px 10px;
+    background: $orange-40;
+    border-radius: 15px;
+    color: $white;
+    text-align: center;
+    font-weight: bold;
+    cursor: pointer;
   }
 }
