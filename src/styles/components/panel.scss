@@ -132,22 +132,23 @@
   .plus-btn {
     display: none;
     position: absolute;
-    width: 45px;
-    height: 45px;
-    padding: 13px 16px;
+    width: 38px;
+    height: 38px;
+    padding: 11px 13.5px;
     border-radius: 25px;
+    font-size: 12px;
     background-color: $orange-40;
     cursor: pointer;
     z-index: 10;
 
     &.right {
-      right: -23px;
+      right: -18px;
       top: 50%;
       transform:  translateY(-50%);
     }
 
     &.bottom {
-      bottom: -23px;
+      bottom: -18px;
       left: 50%;
       transform:  translateX(-50%);
     }
